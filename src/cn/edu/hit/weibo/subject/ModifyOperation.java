@@ -64,7 +64,7 @@ public class ModifyOperation extends Subject implements Observable{
 	    
 	public void add(Blog blog) {
 		this.blog = blog;
-		blogDao.addBlog(blog);
+		blog.setId(blogDao.addBlog(blog));
 		operation = "新增微博";
 		notifyObservers();
 	}

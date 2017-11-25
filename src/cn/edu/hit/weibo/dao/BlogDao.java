@@ -26,11 +26,11 @@ public class BlogDao {
 	    * @Title: addBlog  
 	    * @Description: 添加博客
 	    * @param @param blog    参数  
-	    * @return void    返回类型  
+	    * @return int    返回类型  
 	    * @throws  
 	    */  
 	    
-	public void addBlog(Blog blog) {
+	public int addBlog(Blog blog) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -40,6 +40,10 @@ public class BlogDao {
 			pstmt.setString(1, blog.getTitle());
 			pstmt.setString(2, blog.getText());
 			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+	        rs.next();
+	        int key = rs.getInt(1);
+	        return key;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,6 +60,7 @@ public class BlogDao {
 				e.printStackTrace();
 			}
 		}
+		return -1;
 	}
 	  
 	    /**  
