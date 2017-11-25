@@ -64,8 +64,8 @@ public class ReadOperation extends Subject implements Observable{
 	    */  
 	    
 	public Blog read(int id) {
-		notifyObservers();
 		this.blog = blogDao.getBlogById(id);
+		notifyObservers();
 		return blog;
 	}
 
