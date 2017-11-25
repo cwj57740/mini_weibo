@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class BlogDao {
 		try {
 			con = JdbcUtils.getConnection();
 			String sql = "insert into blog (title,text) value(?,?)";
-			pstmt = con.prepareStatement(sql);
+			pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, blog.getTitle());
 			pstmt.setString(2, blog.getText());
 			pstmt.executeUpdate();
