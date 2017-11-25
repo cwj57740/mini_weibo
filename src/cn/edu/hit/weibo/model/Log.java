@@ -1,5 +1,14 @@
 package cn.edu.hit.weibo.model;
 
+  
+    /**  
+    * @ClassName: Log  
+    * @Description: 日志实体类
+    * @author chenw  
+    * @date 2017年11月25日  
+    *    
+    */  
+    
 public class Log {
 	
 	//主键
