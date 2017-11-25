@@ -112,14 +112,20 @@ public class MainWindow {
 		flashTable();
 		
 		JButton button_view = new JButton("查看");
-//		button_view.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				String id = table.getValueAt(table.getSelectedRow(), 0).toString();
-//				if(id!="-1"){
-//					
-//				}
-//			}
-//		});
+		button_view.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String id = table.getValueAt(table.getSelectedRow(), 0).toString();
+				if(id!="-1"){
+					int blogid = Integer.parseInt(id);
+					Blog blog = readOperation.read(blogid);
+					counter = new Counter(readOperation);
+					textField.setText(blog.getTitle());
+					textArea.setText(blog.getText());
+				}else{
+					JOptionPane.showMessageDialog(null, "未选择博文", "错误", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		button_view.setFont(new Font("宋体", Font.PLAIN, 20));
 		button_view.setBounds(50, 296, 113, 27);
 		frame.getContentPane().add(button_view);
