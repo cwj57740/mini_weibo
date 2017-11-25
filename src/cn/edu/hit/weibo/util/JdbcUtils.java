@@ -8,6 +8,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
+  
+    /**  
+    * @ClassName: JdbcUtils  
+    * @Description: jdbc工具类
+    * @author chenw  
+    * @date 2017年11月25日  
+    *    
+    */  
+    
 public class JdbcUtils {
 	private static Properties props = null;
 	

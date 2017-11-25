@@ -1,5 +1,14 @@
 package cn.edu.hit.weibo.model;
 
+  
+    /**  
+    * @ClassName: Blog  
+    * @Description: 博客实体类 
+    * @author chenw  
+    * @date 2017年11月25日  
+    *    
+    */  
+    
 public class Blog {
 
 	//主键
