@@ -32,12 +32,11 @@ public class LogDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JdbcUtils.getConnection();
-			String sql = "insert into log (l_id,b_id,operation,time) value(?,?,?,?)";
+			String sql = "insert into log (b_id,operation,time) value(?,?,?)";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, log.getId());
-			pstmt.setInt(2, log.getBId());
-			pstmt.setString(3, log.getOperation());
-			pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(1, log.getBId());
+			pstmt.setString(2, log.getOperation());
+			pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
