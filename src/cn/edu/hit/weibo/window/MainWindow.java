@@ -15,7 +15,26 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import cn.edu.hit.weibo.component.Counter;
+import cn.edu.hit.weibo.component.Logger;
+import cn.edu.hit.weibo.dao.BlogDao;
+import cn.edu.hit.weibo.model.Blog;
+import cn.edu.hit.weibo.subject.ModifyOperation;
+import cn.edu.hit.weibo.subject.ReadOperation;
+import cn.edu.hit.weibo.util.ListtoVector;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+
+  
+    /**  
+    * @ClassName: MainWindow  
+    * @Description: TODO 程序主窗口
+    * @author dell  
+    * @date 2017年11月25日  
+    *    
+    */  
+    
 public class MainWindow {
 
 	private JFrame frame;
@@ -23,6 +42,10 @@ public class MainWindow {
 	private JTextField textField;
 	private Vector<String> columnNames;
 	private DefaultTableModel dataModel;
+	private ReadOperation readOperation;
+	private ModifyOperation modifyOperation;
+	private Counter counter;
+	private Logger logger;
 
 	/**
 	 * Launch the application.
@@ -44,6 +67,8 @@ public class MainWindow {
 	 * Create the application.
 	 */
 	public MainWindow() {
+		modifyOperation = new ModifyOperation();
+		readOperation = new ReadOperation();
 		initialize();
 	}
 
@@ -63,6 +88,14 @@ public class MainWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
+		//微博标题
+		textField = new JTextField();
+		textField.setFont(new Font("宋体", Font.PLAIN, 20));
+		textField.setBounds(136, 13, 755, 43);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		//正文输入框
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(50, 136, 841, 119);
 		frame.getContentPane().add(textArea);
@@ -71,17 +104,39 @@ public class MainWindow {
 		scrollPane.setBounds(50, 352, 841, 327);
 		frame.getContentPane().add(scrollPane);
 		
+		//博文表
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
 		//显示表格数据
+		flashTable();
 		
 		JButton button_view = new JButton("查看");
+//		button_view.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				String id = table.getValueAt(table.getSelectedRow(), 0).toString();
+//				if(id!="-1"){
+//					
+//				}
+//			}
+//		});
 		button_view.setFont(new Font("宋体", Font.PLAIN, 20));
 		button_view.setBounds(50, 296, 113, 27);
 		frame.getContentPane().add(button_view);
 		
 		JButton button_add = new JButton("发布");
+		button_add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String title = textField.getText();
+				String text = textArea.getText();
+				Blog blog = new Blog();
+				blog.setTitle(title);
+				blog.setText(text);
+				modifyOperation.add(blog);
+				logger = new Logger(modifyOperation);
+				flashTable();
+			}
+		});
 		button_add.setFont(new Font("宋体", Font.PLAIN, 20));
 		button_add.setBounds(280, 296, 113, 27);
 		frame.getContentPane().add(button_add);
@@ -106,11 +161,7 @@ public class MainWindow {
 		Label_title.setBounds(50, 27, 72, 18);
 		frame.getContentPane().add(Label_title);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("宋体", Font.PLAIN, 20));
-		textField.setBounds(136, 13, 755, 43);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		
 	}
 	
 	/**
@@ -119,15 +170,16 @@ public class MainWindow {
 	 * @return void 返回类型 
 	 * @throws
 	 */
-//	public void flashTable(){
-//		Vector<Vector<String>>  = ;
-//		if(!=null){
-//			dataModel = new DefaultTableModel(,columnNames);
-//			table.setModel(dataModel);
-//		}
-//		else{
-//				JOptionPane.showMessageDialog(null, "未找到数据", "错误", JOptionPane.ERROR_MESSAGE);
-//		}
-//	}
+	public void flashTable(){
+		BlogDao blogDao = new BlogDao();
+		Vector<Vector<String>> blogList = ListtoVector.toVector(blogDao.getAllBlogList());
+		if(blogList!=null){
+			dataModel = new DefaultTableModel(blogList,columnNames);
+			table.setModel(dataModel);
+		}
+		else{
+				JOptionPane.showMessageDialog(null, "未找到数据", "错误", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 	
 }

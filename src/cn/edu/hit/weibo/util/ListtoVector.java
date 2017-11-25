@@ -1,12 +1,23 @@
 package cn.edu.hit.weibo.util;
 
+
+
 import java.util.List;
 import java.util.Vector;
 
 import cn.edu.hit.weibo.model.Blog;
 
+  
+    /**  
+    * @ClassName: ListtoVector  
+    * @Description: TODO 将blogList转换为二维Vector类型
+    * @author dell  
+    * @date 2017年11月25日  
+    *    
+    */  
+    
 public class ListtoVector {
-	public Vector<Vector<String>> toVector(List<Blog> blogList){
+	public static Vector<Vector<String>> toVector(List<Blog> blogList){
 		Vector<Vector<String>> vec = new Vector<Vector<String>>();
 		for(int i=0;i<blogList.size();i++){
 			Blog blog = blogList.get(i);
