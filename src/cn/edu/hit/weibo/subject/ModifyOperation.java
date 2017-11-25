@@ -13,6 +13,7 @@ import cn.edu.hit.weibo.model.Blog;
     */  
     
 public class ModifyOperation extends Subject implements Observable{
+	
 	private BlogDao blogDao;
 	  
 	    /**  
@@ -47,7 +48,13 @@ public class ModifyOperation extends Subject implements Observable{
 		this.blog = blog;
 	}
 	  
-	    /**  
+	public ModifyOperation() {
+		super();
+		blogDao = new BlogDao();
+	}
+
+
+		/**  
 	    * @Title: add  
 	    * @Description: 新增微博
 	    * @param @param blog    参数  
