@@ -186,6 +186,7 @@ public class BlogDao {
 			con = JdbcUtils.getConnection();
 			String sql = "select * from blog where id = ?";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, id);
 			rs = pstmt.executeQuery();
 			Blog blog = null;
 			if(rs.next()) {
