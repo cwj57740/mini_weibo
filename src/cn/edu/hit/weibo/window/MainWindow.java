@@ -11,8 +11,10 @@ import java.awt.Font;
 import java.util.Vector;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 
 public class MainWindow {
 
@@ -110,4 +112,22 @@ public class MainWindow {
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 	}
+	
+	/**
+	 * @Description 刷新表格
+	 * @param  参数
+	 * @return void 返回类型 
+	 * @throws
+	 */
+//	public void flashTable(){
+//		Vector<Vector<String>>  = ;
+//		if(!=null){
+//			dataModel = new DefaultTableModel(,columnNames);
+//			table.setModel(dataModel);
+//		}
+//		else{
+//				JOptionPane.showMessageDialog(null, "未找到数据", "错误", JOptionPane.ERROR_MESSAGE);
+//		}
+//	}
+	
 }
