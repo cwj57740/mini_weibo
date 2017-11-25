@@ -69,6 +69,10 @@ public class MainWindow {
 	public MainWindow() {
 		modifyOperation = new ModifyOperation();
 		readOperation = new ReadOperation();
+		counter = new Counter(readOperation);
+		readOperation.registerObserver(counter);
+		logger = new Logger(modifyOperation);
+		modifyOperation.registerObserver(logger);
 		initialize();
 	}
 
@@ -118,9 +122,10 @@ public class MainWindow {
 				if(id!="-1"){
 					int blogid = Integer.parseInt(id);
 					Blog blog = readOperation.read(blogid);
-					counter = new Counter(readOperation);
+					
 					textField.setText(blog.getTitle());
 					textArea.setText(blog.getText());
+					flashTable();
 				}else{
 					JOptionPane.showMessageDialog(null, "未选择博文", "错误", JOptionPane.ERROR_MESSAGE);
 				}
@@ -139,7 +144,7 @@ public class MainWindow {
 				blog.setTitle(title);
 				blog.setText(text);
 				modifyOperation.add(blog);
-				logger = new Logger(modifyOperation);
+				
 				flashTable();
 			}
 		});
