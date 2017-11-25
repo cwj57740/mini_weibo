@@ -21,7 +21,7 @@ public class ModifyWindow {
 	private JTextField textField;
 	private Blog blog;
 	private ModifyOperation modifyOperation;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,8 +45,8 @@ public class ModifyWindow {
 		initialize();
 	}
 	
-	public ModifyWindow(Blog blog) {
-		modifyOperation = new ModifyOperation();
+	public ModifyWindow(Blog blog,ModifyOperation modifyOperation) {
+		this.modifyOperation = modifyOperation;
 		this.blog = blog;
 		initialize();
 		this.frame.setVisible(true);
@@ -81,18 +81,16 @@ public class ModifyWindow {
 		textArea.setBounds(31, 136, 841, 121);
 		frame.getContentPane().add(textArea);
 		
-		String title = textField.getText();
-		String text = textArea.getText();
 		textField.setText(blog.getTitle());
 		textArea.setText(blog.getText());
 		
 		JButton button_sure = new JButton("确定");
 		button_sure.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String title1 = textField.getText();
-				String text1 = textArea.getText();
-				blog.setText(text1);
-				blog.setTitle(title1);
+				String title = textField.getText();
+				String text = textArea.getText();
+				blog.setText(text);
+				blog.setTitle(title);
 				modifyOperation.modify(blog);
 				frame.dispose();
 			}

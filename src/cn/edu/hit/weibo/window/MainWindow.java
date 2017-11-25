@@ -178,7 +178,7 @@ public class MainWindow {
 //					System.out.println(blogid);
 					blogDao = new BlogDao();
 					Blog blog = blogDao.getBlogById(blogid);
-					new ModifyWindow(blog);
+					new ModifyWindow(blog,modifyOperation);
 					flashTable();
 				}
 			}
