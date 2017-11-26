@@ -46,6 +46,7 @@ public class MainWindow {
 	private ModifyOperation modifyOperation;
 	private Counter counter;
 	private Logger logger;
+	private BlogDao blogDao;
 
 	/**
 	 * Launch the application.
@@ -118,16 +119,23 @@ public class MainWindow {
 		JButton button_view = new JButton("查看");
 		button_view.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String id = table.getValueAt(table.getSelectedRow(), 0).toString();
-				if(id!="-1"){
+				int index = table.getSelectedRow();
+				String id = null;
+				if(index!=-1){
+					id = table.getValueAt(index,0).toString();
+				}else{
+					JOptionPane.showMessageDialog(null, "未选择博文", "错误", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				//测试用
+//				System.out.println(id);
+				
+				if(id!=null){
 					int blogid = Integer.parseInt(id);
 					Blog blog = readOperation.read(blogid);
-					
 					textField.setText(blog.getTitle());
 					textArea.setText(blog.getText());
 					flashTable();
-				}else{
-					JOptionPane.showMessageDialog(null, "未选择博文", "错误", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -149,17 +157,58 @@ public class MainWindow {
 			}
 		});
 		button_add.setFont(new Font("宋体", Font.PLAIN, 20));
-		button_add.setBounds(280, 296, 113, 27);
+		button_add.setBounds(223, 296, 113, 27);
 		frame.getContentPane().add(button_add);
 		
 		JButton button_modify = new JButton("修改");
+		button_modify.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = table.getSelectedRow();
+				String id = null;
+				if(index!=-1){
+					id = table.getValueAt(index,0).toString();
+				}else{
+					JOptionPane.showMessageDialog(null, "未选择博文", "错误", JOptionPane.ERROR_MESSAGE);
+				}
+				
+//				System.out.println(id);
+				
+				if(id!=null){
+					int blogid = Integer.parseInt(id);
+//					System.out.println(blogid);
+					blogDao = new BlogDao();
+					Blog blog = blogDao.getBlogById(blogid);
+					new ModifyWindow(blog,modifyOperation);
+					flashTable();
+				}
+			}
+		});
 		button_modify.setFont(new Font("宋体", Font.PLAIN, 20));
-		button_modify.setBounds(525, 296, 113, 27);
+		button_modify.setBounds(430, 296, 113, 27);
 		frame.getContentPane().add(button_modify);
 		
 		JButton button_delete = new JButton("删除");
+		button_delete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int index = table.getSelectedRow();
+				String id = null;
+				if(index!=-1){
+					id = table.getValueAt(index,0).toString();
+				}else{
+					JOptionPane.showMessageDialog(null, "未选择博文", "错误", JOptionPane.ERROR_MESSAGE);
+				}
+				if(id!=null){
+					int blogid = Integer.parseInt(id);
+//					System.out.println(blogid);
+					blogDao = new BlogDao();
+					Blog blog = blogDao.getBlogById(blogid);
+					modifyOperation.delete(blog);
+					flashTable();
+				}
+			}
+		});
 		button_delete.setFont(new Font("宋体", Font.PLAIN, 20));
-		button_delete.setBounds(743, 296, 113, 27);
+		button_delete.setBounds(620, 296, 113, 27);
 		frame.getContentPane().add(button_delete);
 		
 		JLabel Label_text = new JLabel("正文：");
@@ -171,6 +220,16 @@ public class MainWindow {
 		Label_title.setFont(new Font("宋体", Font.PLAIN, 20));
 		Label_title.setBounds(50, 27, 72, 18);
 		frame.getContentPane().add(Label_title);
+		
+		JButton button_refresh = new JButton("刷新");
+		button_refresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				flashTable();
+			}
+		});
+		button_refresh.setFont(new Font("宋体", Font.PLAIN, 20));
+		button_refresh.setBounds(777, 296, 113, 27);
+		frame.getContentPane().add(button_refresh);
 		
 		
 	}
